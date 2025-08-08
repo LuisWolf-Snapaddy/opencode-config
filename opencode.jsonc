@@ -1,0 +1,71 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "system",
+  "autoupdate": true,
+  "share": "disabled",
+  // Best model for most tasks (especially code generation)
+  // Claude integration is the best on opencode
+  "model": "github-copilot/claude-sonnet-4",
+  // Free model for quick tasks
+  "small_model": "github-copilot/gpt-4o",
+  "instructions": [".github/copilot-instructions.md"],
+  "mcp": {
+    "angular-cli": {
+      "type": "local",
+      "command": ["npx", "@angular-cli", "mcp"],
+      // Currently crashes when starting
+      "enabled": false
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest"],
+      "enabled": true
+    }
+  },
+  "agent": {
+    "code-reviewer": {
+      "description": "Reviews code for best practices and potential issues.",
+      "mode": "primary",
+      // Good model for web-dev tasks
+      "model": "github-copilot/gpt-5",
+      // Can only read files but not write or edit them
+      "tools": {
+        "bash": false,
+        "edit": false,
+        "write": false,
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "patch": false,
+        "todowrite": true,
+        "todoread": true,
+        "webfetch": true
+      },
+      "temperature": 0.2,
+      "prompt": "{file:./prompts/code-reviewer.md}"
+    },
+    "document-writer": {
+      "description": "Writes documentation for codebases.",
+      "mode": "primary",
+      // Free model to be used more often
+      "model": "github-copilot/gpt-4.1",
+      // Can read and edit files, but not create new ones or run commands
+      "tools": {
+        "bash": false,
+        "edit": true,
+        "write": false,
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "patch": true,
+        "todowrite": true,
+        "todoread": true,
+        "webfetch": true
+      },
+      "temperature": 0.3,
+      "prompt": "{file:./prompts/document-writer.md}"
+    }
+  }
+}

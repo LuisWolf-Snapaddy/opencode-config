@@ -15,6 +15,11 @@
       "command": ["npx", "-y", "@angular/cli", "mcp"],
       "enabled": true
     },
+    "astro": {
+      "type": "remote",
+      "url": "https://mcp.docs.astro.build/mcp",
+      "enabled": true
+    },
     "playwright": {
       "type": "local",
       "command": ["npx", "@playwright/mcp@latest"],

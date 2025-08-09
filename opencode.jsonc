@@ -12,9 +12,8 @@
   "mcp": {
     "angular-cli": {
       "type": "local",
-      "command": ["npx", "@angular-cli", "mcp"],
-      // Currently crashes when starting
-      "enabled": false
+      "command": ["npx", "-y", "@angular/cli", "mcp"],
+      "enabled": true
     },
     "playwright": {
       "type": "local",

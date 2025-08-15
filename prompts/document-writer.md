@@ -12,3 +12,4 @@ When given a file only add comments to this file.
 - Focus on what the code does, not implementation details.
 - Maintain consistency in documentation style throughout the file if there is already documentation.
 - Only add comments to the file, do not change the code structure.
+- Only add comments to functions that do not yet have documentation.

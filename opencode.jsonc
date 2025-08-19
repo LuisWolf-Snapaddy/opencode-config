@@ -26,6 +26,14 @@
       "enabled": true
     }
   },
+  "permission": {
+    "bash": {
+      // Ask for permission to run these commands
+      "npm install": "ask",
+      "git commit": "ask",
+      "git push": "ask"
+    }
+  },
   "agent": {
     "code-reviewer": {
       "description": "Reviews code for best practices and potential issues.",
@@ -34,7 +42,7 @@
       "model": "github-copilot/gpt-5",
       // Can only read files but not write or edit them
       "tools": {
-        "bash": false,
+        "bash": true,
         "edit": false,
         "write": false,
         "read": true,
@@ -45,6 +53,16 @@
         "todowrite": true,
         "todoread": true,
         "webfetch": true
+      },
+      "permission": {
+        "webfetch": "ask",
+        "bash": {
+          // Allow specific git commands
+          "git status *": "allow",
+          "git diff *": "allow",
+          // Ask for other commands
+          "*": "ask"
+        }
       },
       "temperature": 0.2,
       "prompt": "{file:./prompts/code-reviewer.md}"

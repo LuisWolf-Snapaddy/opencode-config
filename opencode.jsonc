@@ -20,6 +20,16 @@
       "url": "https://mcp.docs.astro.build/mcp",
       "enabled": true
     },
+    "snapaddy-components": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "markdown-mcp-resource@latest",
+        "https://components.snapaddy.com/assets/mcp/index.json"
+      ],
+      "enabled": true
+    },
     "playwright": {
       "type": "local",
       "command": ["npx", "@playwright/mcp@latest"],

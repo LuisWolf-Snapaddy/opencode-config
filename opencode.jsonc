@@ -1,13 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "system",
+  "theme": "catppuccin",
   "autoupdate": true,
   "share": "disabled",
   // Best model for most tasks (especially code generation)
   // Claude integration is the best on opencode
-  "model": "github-copilot/claude-sonnet-4",
+  "model": "github-copilot/claude-sonnet-4.5",
   // Free model for quick tasks
-  "small_model": "github-copilot/gpt-4o",
+  "small_model": "github-copilot/claude-haiku-4.5",
   "instructions": [".github/copilot-instructions.md"],
   "mcp": {
     "angular-cli": {
@@ -49,6 +49,7 @@
     "bash": {
       // Ask for permission to run these commands
       "npm install": "ask",
+      "npm install *": "ask",
       "git commit": "ask",
       "git push": "ask"
     }
@@ -58,30 +59,26 @@
       "description": "Reviews code for best practices and potential issues.",
       "mode": "primary",
       // Good model for web-dev tasks
-      "model": "github-copilot/gpt-5",
+      "model": "github-copilot/claude-sonnet-4.5",
       // Can only read files but not write or edit them
-      "tools": {
-        "bash": true,
-        "edit": false,
-        "write": false,
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "patch": false,
-        "todowrite": true,
-        "todoread": true,
-        "webfetch": true
-      },
       "permission": {
-        "webfetch": "ask",
         "bash": {
           // Allow specific git commands
           "git status *": "allow",
           "git diff *": "allow",
           // Ask for other commands
           "*": "ask"
-        }
+        },
+        "edit": "deny",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "deny",
+        "todowrite": "allow",
+        "todoread": "allow",
+        "webfetch": "ask"
       },
       "temperature": 0.2,
       "prompt": "{file:./prompts/code-reviewer.md}"
@@ -90,20 +87,20 @@
       "description": "Writes documentation for codebases.",
       "mode": "primary",
       // Free model to be used more often
-      "model": "github-copilot/gpt-4.1",
+      "model": "github-copilot/claude-haiku-4.5",
       // Can read and edit files, but not create new ones or run commands
-      "tools": {
-        "bash": false,
-        "edit": true,
-        "write": false,
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "patch": true,
-        "todowrite": true,
-        "todoread": true,
-        "webfetch": true
+      "permission": {
+        "bash": "deny",
+        "edit": "allow",
+        "write": "deny",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "patch": "allow",
+        "todowrite": "allow",
+        "todoread": "allow",
+        "webfetch": "allow"
       },
       "temperature": 0.3,
       "prompt": "{file:./prompts/document-writer.md}"

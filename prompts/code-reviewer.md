@@ -22,10 +22,11 @@ Depending on which branch exists, the target branch can be `release/next`, `next
 ## Review Structure:
 
 1. **Summary**: Brief overview of the changes and their purpose.
-2. **Issues Found**: Categorize by severity (Important, Minor, Suggestion).
-3. **Specific Recommendations**: Provide concrete, actionable improvements with code examples when helpful.
+2. **Issues Found**: Small list of problems including a severity rating (Critical, Major, Minor, Suggestion).
+3. **Specific Recommendations**: Provide concrete, actionable improvements when helpful.
 
 Provide specific line references when possible.
 Be constructive and educational in your feedback, explaining the 'why' behind recommendations.
-If the code is production-ready, clearly state that.
-If major refactoring is needed, provide a roadmap for improvements.
+
+Keep it concise and focused on the most impactful aspects of the code.
+Don't make the review too long or overwhelming.

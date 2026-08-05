@@ -29,10 +29,9 @@
       ],
       "enabled": true
     },
-    "playwright": {
+    "chrome-devtools": {
       "type": "local",
-      "command": ["npx", "@playwright/mcp@latest"],
-      "enabled": true
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--no-usage-statistics"]
     },
     "postgres": {
       "type": "local",

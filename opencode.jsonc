@@ -77,7 +77,7 @@
       "description": "Reviews code for best practices and potential issues.",
       "mode": "primary",
       // Good model for web-dev tasks
-      "model": "github-copilot/claude-sonnet-4.5",
+      "model": "openai/gpt-5.6-terra",
       // Can only read files but not write or edit them
       "permission": {
         "bash": {
@@ -105,7 +105,7 @@
       "description": "Writes documentation for codebases.",
       "mode": "primary",
       // Free model to be used more often
-      "model": "github-copilot/claude-haiku-4.5",
+      "model": "openai/gpt-5.6-luna",
       // Can read and edit files, but not create new ones or run commands
       "permission": {
         "bash": "deny",

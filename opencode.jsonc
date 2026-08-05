@@ -84,6 +84,9 @@
           // Allow specific git commands
           "git status *": "allow",
           "git diff *": "allow",
+          "git log *": "allow",
+          "git rev-parse *": "allow",
+          "git merge-base *": "allow",
           // Ask for other commands
           "*": "ask"
         },

@@ -1,6 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "catppuccin",
   "autoupdate": true,
   "share": "disabled",
   // Best model for most tasks (especially code generation)

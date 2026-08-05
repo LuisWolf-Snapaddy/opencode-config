@@ -41,6 +41,26 @@
         "@modelcontextprotocol/server-postgres",
         "postgres://sa_backend:mySecretDBPassword@localhost:5432/postgres"
       ]
+    },
+    "i18n-editor": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@snapaddy/i18n-cli@latest",
+        "mcp"
+      ],
+      "enabled": true
+    },
+    "workflow-docs": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "markdown-mcp-resource@latest",
+        "https://workflow-docs.snapaddy.com/assets/mcp/index.json"
+      ],
+      "enabled": true
     }
   },
   "permission": {

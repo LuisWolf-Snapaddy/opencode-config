@@ -4,10 +4,9 @@
   "autoupdate": true,
   "share": "disabled",
   // Best model for most tasks (especially code generation)
-  // Claude integration is the best on opencode
-  "model": "github-copilot/claude-sonnet-4.5",
+  "model": "openai/gpt-5.6-terra",
   // Free model for quick tasks
-  "small_model": "github-copilot/claude-haiku-4.5",
+  "small_model": "openai/gpt-5.6-luna",
   "instructions": [".github/copilot-instructions.md"],
   "mcp": {
     "angular-cli": {

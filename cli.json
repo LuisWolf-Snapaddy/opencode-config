@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "theme": {
+    "name": "catppuccin",
+    "mode": "system"
+  },
+  "animations": true,
+  "session": {
+    "verbosity": "low",
+    "tps": false,
+    "permissions": "prompt"
+  },
+  "tabs": {
+    "mode": "off"
+  },
+  "diffs": {
+    "view": "split"
+  },
+  "attention": {
+    "notifications": true,
+    "sound": true
+  }
+}

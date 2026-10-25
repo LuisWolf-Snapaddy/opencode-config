@@ -3,25 +3,26 @@
   "autoupdate": true,
   "share": "disabled",
   // Best model for most tasks (especially code generation)
-  "model": "openai/gpt-5.6-terra",
+  "model": "openai/gpt-6.1-sol",
   // Free model for quick tasks
-  "small_model": "openai/gpt-5.6-luna",
+  "small_model": "openai/gpt-6-luna",
   "instructions": [".github/copilot-instructions.md"],
   "mcp": {
     "angular-cli": {
       "type": "local",
-      "command": ["npx", "-y", "@angular/cli", "mcp", "--experimental-tool"],
+      "command": ["pnpm", "dlx", "-y", "@angular/cli", "mcp", "--experimental-tool"],
       "enabled": true
     },
     "astro": {
       "type": "remote",
       "url": "https://mcp.docs.astro.build/mcp",
-      "enabled": true
+      "enabled": false
     },
     "snapaddy-components": {
       "type": "local",
       "command": [
-        "npx",
+        "pnpm",
+        "dlx",
         "-y",
         "markdown-mcp-resource@latest",
         "https://components.snapaddy.com/assets/mcp/index.json"
@@ -30,21 +31,25 @@
     },
     "chrome-devtools": {
       "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--no-usage-statistics"]
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--no-usage-statistics"],
+      "enabled": false
     },
     "postgres": {
       "type": "local",
       "command": [
-        "npx",
+        "pnpm",
+        "dlx",
         "-y",
         "@modelcontextprotocol/server-postgres",
         "postgres://sa_backend:mySecretDBPassword@localhost:5432/postgres"
-      ]
+      ],
+      "enabled": false
     },
     "i18n-editor": {
       "type": "local",
       "command": [
-        "npx",
+        "pnpm",
+        "dlx",
         "-y",
         "@snapaddy/i18n-cli@latest",
         "mcp"
@@ -54,12 +59,13 @@
     "workflow-docs": {
       "type": "local",
       "command": [
-        "npx",
+        "pnpm",
+        "dlx",
         "-y",
         "markdown-mcp-resource@latest",
         "https://workflow-docs.snapaddy.com/assets/mcp/index.json"
       ],
-      "enabled": true
+      "enabled": false
     }
   },
   "permission": {
@@ -76,7 +82,7 @@
       "description": "Reviews code for best practices and potential issues.",
       "mode": "primary",
       // Good model for web-dev tasks
-      "model": "openai/gpt-5.6-terra",
+      "model": "openai/gpt-6.1-sol",
       // Can only read files but not write or edit them
       "permission": {
         "bash": {
@@ -107,7 +113,7 @@
       "description": "Writes documentation for codebases.",
       "mode": "primary",
       // Free model to be used more often
-      "model": "openai/gpt-5.6-luna",
+      "model": "openai/gpt-6-luna",
       // Can read and edit files, but not create new ones or run commands
       "permission": {
         "bash": "deny",

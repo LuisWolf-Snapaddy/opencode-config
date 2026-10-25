@@ -1,135 +1,149 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "autoupdate": true,
+  "update": "auto",
   "share": "disabled",
   // Best model for most tasks (especially code generation)
   "model": "openai/gpt-6.1-sol",
-  // Free model for quick tasks
-  "small_model": "openai/gpt-6-luna",
   "instructions": [".github/copilot-instructions.md"],
   "mcp": {
-    "angular-cli": {
-      "type": "local",
-      "command": ["pnpm", "dlx", "-y", "@angular/cli", "mcp", "--experimental-tool"],
-      "enabled": true
-    },
-    "astro": {
-      "type": "remote",
-      "url": "https://mcp.docs.astro.build/mcp",
-      "enabled": false
-    },
-    "snapaddy-components": {
-      "type": "local",
-      "command": [
-        "pnpm",
-        "dlx",
-        "-y",
-        "markdown-mcp-resource@latest",
-        "https://components.snapaddy.com/assets/mcp/index.json"
-      ],
-      "enabled": true
-    },
-    "chrome-devtools": {
-      "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--no-usage-statistics"],
-      "enabled": false
-    },
-    "postgres": {
-      "type": "local",
-      "command": [
-        "pnpm",
-        "dlx",
-        "-y",
-        "@modelcontextprotocol/server-postgres",
-        "postgres://sa_backend:mySecretDBPassword@localhost:5432/postgres"
-      ],
-      "enabled": false
-    },
-    "i18n-editor": {
-      "type": "local",
-      "command": [
-        "pnpm",
-        "dlx",
-        "-y",
-        "@snapaddy/i18n-cli@latest",
-        "mcp"
-      ],
-      "enabled": true
-    },
-    "workflow-docs": {
-      "type": "local",
-      "command": [
-        "pnpm",
-        "dlx",
-        "-y",
-        "markdown-mcp-resource@latest",
-        "https://workflow-docs.snapaddy.com/assets/mcp/index.json"
-      ],
-      "enabled": false
+    "servers": {
+      "angular-cli": {
+        "type": "local",
+        "command": ["pnpm", "dlx", "-y", "@angular/cli", "mcp", "--experimental-tool"],
+        "disabled": false
+      },
+      "astro": {
+        "type": "remote",
+        "url": "https://mcp.docs.astro.build/mcp",
+        "disabled": true
+      },
+      "snapaddy-components": {
+        "type": "local",
+        "command": [
+          "pnpm",
+          "dlx",
+          "-y",
+          "markdown-mcp-resource@latest",
+          "https://components.snapaddy.com/assets/mcp/index.json"
+        ],
+        "disabled": false
+      },
+      "chrome-devtools": {
+        "type": "local",
+        "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--no-usage-statistics"],
+        "disabled": true
+      },
+      "postgres": {
+        "type": "local",
+        "command": [
+          "pnpm",
+          "dlx",
+          "-y",
+          "@modelcontextprotocol/server-postgres",
+          "postgres://sa_backend:mySecretDBPassword@localhost:5432/postgres"
+        ],
+        "disabled": true
+      },
+      "i18n-editor": {
+        "type": "local",
+        "command": [
+          "pnpm",
+          "dlx",
+          "-y",
+          "@snapaddy/i18n-cli@latest",
+          "mcp"
+        ],
+        "disabled": false
+      },
+      "workflow-docs": {
+        "type": "local",
+        "command": [
+          "pnpm",
+          "dlx",
+          "-y",
+          "markdown-mcp-resource@latest",
+          "https://workflow-docs.snapaddy.com/assets/mcp/index.json"
+        ],
+        "disabled": true
+      }
     }
   },
-  "permission": {
-    "bash": {
-      // Ask for permission to run these commands
-      "npm install": "ask",
-      "npm install *": "ask",
-      "git commit": "ask",
-      "git push": "ask"
+  "permissions": [
+    // Preserve V1's prompt before accessing directories outside the project.
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+    // Ask for permission to run these commands.
+    { "action": "shell", "resource": "npm install", "effect": "ask" },
+    { "action": "shell", "resource": "npm install *", "effect": "ask" },
+    { "action": "shell", "resource": "git commit", "effect": "ask" },
+    { "action": "shell", "resource": "git push", "effect": "ask" }
+  ],
+  "experimental": {
+    "todo": true
+  },
+  "providers": {
+    "openai": {
+      "models": {
+        "gpt-6.1-sol": {
+          "variants": [
+            { "id": "code-reviewer", "body": { "temperature": 0.2 } }
+          ]
+        },
+        "gpt-6-luna": {
+          "variants": [
+            { "id": "document-writer", "body": { "temperature": 0.3 } }
+          ]
+        }
+      }
     }
   },
-  "agent": {
+  "agents": {
+    // Free model for quick tasks.
+    "title": {
+      "model": "openai/gpt-6-luna"
+    },
     "code-reviewer": {
       "description": "Reviews code for best practices and potential issues.",
       "mode": "primary",
       // Good model for web-dev tasks
-      "model": "openai/gpt-6.1-sol",
+      "model": "openai/gpt-6.1-sol#code-reviewer",
       // Can only read files but not write or edit them
-      "permission": {
-        "bash": {
-          // Allow specific git commands
-          "git status *": "allow",
-          "git diff *": "allow",
-          "git log *": "allow",
-          "git rev-parse *": "allow",
-          "git merge-base *": "allow",
-          // Ask for other commands
-          "*": "ask"
-        },
-        "edit": "deny",
-        "write": "deny",
-        "read": "allow",
-        "grep": "allow",
-        "glob": "allow",
-        "list": "allow",
-        "patch": "deny",
-        "todowrite": "allow",
-        "todoread": "allow",
-        "webfetch": "ask"
-      },
-      "temperature": 0.2,
-      "prompt": "{file:./prompts/code-reviewer.md}"
+      "permissions": [
+        // Preserve the original rule order: the final wildcard asks for all shell commands.
+        { "action": "shell", "resource": "git status *", "effect": "allow" },
+        { "action": "shell", "resource": "git diff *", "effect": "allow" },
+        { "action": "shell", "resource": "git log *", "effect": "allow" },
+        { "action": "shell", "resource": "git rev-parse *", "effect": "allow" },
+        { "action": "shell", "resource": "git merge-base *", "effect": "allow" },
+        { "action": "shell", "resource": "*", "effect": "ask" },
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "list", "resource": "*", "effect": "allow" },
+        { "action": "todowrite", "resource": "*", "effect": "allow" },
+        { "action": "todoread", "resource": "*", "effect": "allow" },
+        { "action": "webfetch", "resource": "*", "effect": "ask" }
+      ],
+      "system": "{file:./prompts/code-reviewer.md}"
     },
     "document-writer": {
       "description": "Writes documentation for codebases.",
       "mode": "primary",
       // Free model to be used more often
-      "model": "openai/gpt-6-luna",
-      // Can read and edit files, but not create new ones or run commands
-      "permission": {
-        "bash": "deny",
-        "edit": "allow",
-        "write": "deny",
-        "read": "allow",
-        "grep": "allow",
-        "glob": "allow",
-        "list": "allow",
-        "patch": "allow",
-        "todowrite": "allow",
-        "todoread": "allow",
-        "webfetch": "allow"
-      },
-      "temperature": 0.3,
-      "prompt": "{file:./prompts/document-writer.md}"
+      "model": "openai/gpt-6-luna#document-writer",
+      // Preserve the effective edit permission: the original final patch rule allowed edits.
+      "permissions": [
+        { "action": "shell", "resource": "*", "effect": "deny" },
+        { "action": "edit", "resource": "*", "effect": "allow" },
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "list", "resource": "*", "effect": "allow" },
+        { "action": "todowrite", "resource": "*", "effect": "allow" },
+        { "action": "todoread", "resource": "*", "effect": "allow" },
+        { "action": "webfetch", "resource": "*", "effect": "allow" }
+      ],
+      "system": "{file:./prompts/document-writer.md}"
     }
   }
 }
